@@ -1,0 +1,120 @@
+"  /===================================\
+"  | VimFiles by Lucas Caton.          |
+"  | http://blog.lucascaton.com.br/    |
+"  | http://www.twitter.com/lucascaton |
+"  | Created at 2011, January.         |
+"  \===================================/
+
+" This vimfiles uses the spf13's distribution of vim plugins and resources: http://vim.spf13.com/
+
+" ---------------------------------
+" Plugins
+" ---------------------------------
+
+" Ack / ag (the_silver_searcher)
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" ---------------------------------
+" Settings
+" ---------------------------------
+
+" Autoindent with two spaces, always expand tabs
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
+set timeoutlen=0 " Time to wait after ESC (default causes an annoying delay)
+
+" let g:Powerline_symbols = 'fancy'
+" set laststatus=2
+
+" Folding settings
+set nofoldenable " dont fold by default
+
+" Forcing the use of hjkl keys to navigate
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+" Desactive relative line numbers
+set nu
+
+" Ignore case in searches
+set ignorecase
+
+" Open splits at right side (and below)
+set splitright
+set splitbelow
+
+" Line wrapping on
+set wrap
+
+" ---------------------------------
+" Theme
+" ---------------------------------
+
+set guifont=Monaco:h15
+" set guifont=Inconsolata-dz:h17
+
+" if has('gui_macvim')
+  " set transparency=5 " Make the window slightly transparent
+" endif
+
+" Color Scheme
+colorscheme ir_black
+
+" ---------------------------------
+" Functions
+" ---------------------------------
+
+" Removes trailing spaces
+function TrimWhiteSpace()
+  %s/\s*$//
+  ''
+:endfunction
+
+set list listchars=tab:»·,trail:·
+
+map <leader>= :call TrimWhiteSpace()<CR>
+map! <leader>= :call TrimWhiteSpace()<CR>
+
+autocmd BufWritePre * :%s/\s\+$//e
+
+" Tab toggle
+function TabToggle()
+  if &expandtab
+    set noexpandtab
+  else
+    set expandtab
+  endif
+  retab!
+endfunction
+nmap <F9> mz:execute TabToggle()<CR>
+
+" ---------------------------------
+" Shortcuts
+" ---------------------------------
+
+" Ctrl+R reloads the ~/.vimrc file
+nnoremap <C-R> :source ~/.vimrc
+
+" Ctrl+L clear the highlight as well as redraw
+nnoremap <C-L> :nohls<CR><C-L>
+
+" Improve 'n' command (for searches)
+nmap n nzz
+nmap N Nzz
+
+" ---------------------------------
+" Syntax Highlighting
+" ---------------------------------
+
+au BufNewFile,BufRead *.thor set filetype=ruby
+au BufNewFile,BufRead *.less set filetype=css
+au BufNewFile,BufRead Guardfile set filetype=ruby
+au BufNewFile,BufRead .pryrc set filetype=ruby
